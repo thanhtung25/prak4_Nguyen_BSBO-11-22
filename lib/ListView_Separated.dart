@@ -1,5 +1,7 @@
+// ignore: file_names
 import 'package:flutter/material.dart';
-import 'package:myapp/DataList.dart';
+
+import 'DataList.dart';
 
 class ListViewSeparated extends StatefulWidget{
   const ListViewSeparated({super.key});

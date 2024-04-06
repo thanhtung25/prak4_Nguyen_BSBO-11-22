@@ -1,48 +1,57 @@
-// ignore: file_names
-  import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:myapp/DataList.dart';
 
-class ListViewName extends StatefulWidget{
-  const ListViewName({super.key});
+class ScreenList extends StatefulWidget{
+  const ScreenList({super.key});
 
   @override
-  State<ListViewName> createState() => _ListViewNameState();
+  State<ScreenList> createState() => _ScreenListState();
 }
 
-class _ListViewNameState extends State<ListViewName> {
-  final TextEditingController _nameController = TextEditingController();
+class _ScreenListState extends State<ScreenList> {
+   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _classController = TextEditingController();
   void addItem() {
     setState(() {
       items.add(Student(name: _nameController.text, classroom: _classController.text));
     });
   }
+  
   @override
   Widget build(BuildContext context){
-    return  Scaffold(
+    return Scaffold(
       appBar: AppBar(
-        title: const Text("Todo ListView"),
+        title: const Text("Todo List"),
         backgroundColor: Colors.amber,
       ),
       body: Column(
         children: [
           Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.all(16),
-              itemBuilder: (context, index){
-                      return ListTile(
-                        title: Text(items[index].name),
-                        subtitle: Text(items[index].classroom),
-                        trailing: IconButton(
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children:
+                 items.map((item) => GestureDetector(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(item.name),
+                        Text(item.classroom),
+                        IconButton(
                           onPressed: ()=> setState(() {
-                                        items.remove(items[index]);
-                                      }), 
-                          icon:const Icon(Icons.delete),
-                          ),
-                      );
-                    },
-                    itemCount: items.length,
+                            items.remove(item);
+                          }), 
+                          icon: const Icon(Icons.delete)
+                          )
+                      ],
+                    ),
+                  ),
+                 ) 
+                 ).toList(),
               ),
+            ),
           ),
           Padding(
                   padding:const EdgeInsets.fromLTRB(10,30,10,20),
@@ -95,7 +104,6 @@ class _ListViewNameState extends State<ListViewName> {
                 ),
         ],
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color(0xffFF9E74),
         onPressed: addItem,
@@ -107,7 +115,8 @@ class _ListViewNameState extends State<ListViewName> {
           color: Colors.white,
         ),
       ) ,
-      
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,   
+     
     );
   }
 }
