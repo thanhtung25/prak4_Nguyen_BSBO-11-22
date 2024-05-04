@@ -62,18 +62,18 @@ class _ListViewSeparatedState extends State<ListViewSeparated> {
                         // ignore: prefer_interpolation_to_compose_strings
                         title:  Text(user.firstName.toString() + " " + user.lastName.toString()),
                         subtitle: Text(user.email.toString()),
-                        leading: CircleAvatar(backgroundImage: NetworkImage(user.avatar.toString())),
-                        // leading: CachedNetworkImage(
-                        //   imageUrl: user.avatar.toString(),
-                        //   width: 100,
-                        //   height: 100,
-                        //   fit:BoxFit.fitHeight,
-                        //   placeholder: (context, url) => Container(color: Colors.black12,),
-                        //   errorWidget: (context, url, error) => Container(
-                        //     color: Colors.black12,
-                        //     child: const Icon(Icons.error, color: Colors.red, size: 15,), 
-                        //   ),
-                        //   ),
+                        //leading: CircleAvatar(backgroundImage: NetworkImage(user.avatar.toString())),
+                        leading: CachedNetworkImage(
+                          imageUrl: user.avatar.toString(),
+                          width: 100,
+                          height: 100,
+                          fit:BoxFit.fitHeight,
+                          placeholder: (context, url) => Container(color: Colors.black12,),
+                          errorWidget: (context, url, error) => Container(
+                            color: Colors.black12,
+                            child: const Icon(Icons.error, color: Colors.red, size: 15,), 
+                          ),
+                          ),
                         trailing: IconButton(
                           // onPressed: ()=> setState(() {
                           //         list.remove(list[index]);
