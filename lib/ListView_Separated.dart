@@ -1,5 +1,8 @@
 // ignore: file_names
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:myapp/api/ApiServiceProvider.dart';
+import 'package:myapp/model/ApiStudent.dart';
 
 import 'DataList.dart';
 
@@ -11,6 +14,7 @@ class ListViewSeparated extends StatefulWidget{
 }
 
 class _ListViewSeparatedState extends State<ListViewSeparated> {
+  ApiServiceProvider _apiServiceProvider =  ApiServiceProvider();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _classController = TextEditingController();
   void addItem() {
@@ -28,23 +32,68 @@ class _ListViewSeparatedState extends State<ListViewSeparated> {
       body: Column(
         children: [
           Expanded(
-            child: ListView.separated(
-              itemBuilder: (context, index){
-                return ListTile(
-                  title: Text(items[index].name),
-                  subtitle: Text(items[index].classroom),
-                  trailing: IconButton(
-                    onPressed: ()=> setState(() {
-                                  items.remove(items[index]);
-                                }), 
-                    icon:const Icon(Icons.delete),
-                    ),
-                );
-              },
-              itemCount: items.length,
-              separatorBuilder: (context, index) {
-                return const Divider();
-              },
+            // child: ListView.separated(
+            //   itemBuilder: (context, index){
+            //     return ListTile(
+            //       title: Text(items[index].name),
+            //       subtitle: Text(items[index].classroom),
+                  // trailing: IconButton(
+                  //   onPressed: ()=> setState(() {
+                  //                 items.remove(items[index]);
+                  //               }), 
+                  //   icon:const Icon(Icons.delete),
+                  //   ),
+            //     );
+            //   },
+            //   itemCount: items.length,
+            //   separatorBuilder: (context, index) {
+            //     return const Divider();
+            //   },
+            //   ),
+            child: FutureBuilder(
+              future: _apiServiceProvider.getUser(), 
+              builder: (BuildContext context, AsyncSnapshot<ApiStudent> snapshot){
+                if(snapshot.hasData){
+                  List<Data>? list = snapshot.data!.data;
+                  return ListView.separated(
+                    itemBuilder: (context, index){
+                      Data user = list[index];
+                      return ListTile(
+                        // ignore: prefer_interpolation_to_compose_strings
+                        title:  Text(user.firstName.toString() + " " + user.lastName.toString()),
+                        subtitle: Text(user.email.toString()),
+                        leading: CircleAvatar(backgroundImage: NetworkImage(user.avatar.toString())),
+                        // leading: CachedNetworkImage(
+                        //   imageUrl: user.avatar.toString(),
+                        //   width: 100,
+                        //   height: 100,
+                        //   fit:BoxFit.fitHeight,
+                        //   placeholder: (context, url) => Container(color: Colors.black12,),
+                        //   errorWidget: (context, url, error) => Container(
+                        //     color: Colors.black12,
+                        //     child: const Icon(Icons.error, color: Colors.red, size: 15,), 
+                        //   ),
+                        //   ),
+                        trailing: IconButton(
+                          // onPressed: ()=> setState(() {
+                          //         list.remove(list[index]);
+                          //       }), 
+                          onPressed: () {
+                            
+                          },
+                          icon:const Icon(Icons.delete),
+                        ),
+                      );
+                    }, 
+                    separatorBuilder: (context, index){
+                      return const Divider();
+                    },
+                    itemCount: list!.length
+                    );
+                }else{
+                  return const Center(child: CircularProgressIndicator());
+                }
+              }
               ),
           ),
           Padding(

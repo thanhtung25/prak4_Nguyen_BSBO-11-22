@@ -1,5 +1,6 @@
 // ignore: file_names
-  import 'package:flutter/material.dart';
+  import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
 import 'package:myapp/DataList.dart';
 
 class ListViewName extends StatefulWidget{
@@ -42,8 +43,17 @@ class _ListViewNameState extends State<ListViewName> {
                       );
                     },
                     itemCount: items.length,
-              ),
+
+              // itemBuilder: (context, index) => CachedNetworkImage(
+              //   key: UniqueKey(),
+              //   imageUrl: "https://reqres.in/img/faces/${index+1}-image.jpg",
+              //   width: 80,
+              //   height: 80,
+              //   fit: BoxFit.contain,
+              //   )
+                ),
           ),
+          //https://reqres.in/img/faces/${index+1}-image.jpg
           Padding(
                   padding:const EdgeInsets.fromLTRB(10,30,10,20),
                   child: TextField(

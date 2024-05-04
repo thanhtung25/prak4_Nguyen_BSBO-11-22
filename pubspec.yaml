@@ -37,6 +37,12 @@ dependencies:
   cupertino_icons: ^1.0.2
   go_router: ^7.1.1
   url_strategy:
+  http: ^1.2.0
+  path_provider:
+  dio: ^5.4.3+1
+  cached_network_image: ^3.3.1
+
+
 
 dev_dependencies:
   flutter_test:
