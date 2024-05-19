@@ -14,12 +14,12 @@ class ListViewSeparated extends StatefulWidget{
 }
 
 class _ListViewSeparatedState extends State<ListViewSeparated> {
-  ApiServiceProvider _apiServiceProvider =  ApiServiceProvider();
+  final ApiServiceProvider _apiServiceProvider =  ApiServiceProvider();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _classController = TextEditingController();
   void addItem() {
     setState(() {
-      items.add(Student(name: _nameController.text, classroom: _classController.text));
+      Student.items.add(Student(name: _nameController.text, classroom: _classController.text));
     });
   }
   @override

@@ -7,13 +7,17 @@ class Student {
     required this.name,
     required this.classroom
   });
-}
+  @override
+  List<Object?> get props => [name, classroom];
 
-
-List<Student> items = [
+  static List<Student> items = [
     Student( name: 'Tung', classroom: 'BSBO-11-22'),
     Student( name: 'Quang', classroom: 'BSBO-10-22'),
     Student( name: 'Cuong', classroom: 'BSBO-11-22'),
     Student( name: 'Chien', classroom: 'BSBO-11-22'),
     Student( name: 'Bao', classroom: 'BSBO-10-22'),
 ];
+}
+
+
+

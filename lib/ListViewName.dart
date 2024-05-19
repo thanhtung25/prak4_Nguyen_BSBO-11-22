@@ -1,8 +1,10 @@
 // ignore: file_names
-  import 'package:cached_network_image/cached_network_image.dart';
+
 import 'package:flutter/material.dart';
 import 'package:myapp/DataList.dart';
-
+import 'package:myapp/prak9/MyInheritWidget_data.dart';
+import 'package:myapp/prak9/locator.dart';
+import 'package:myapp/prak9/netword_Service.dart';
 class ListViewName extends StatefulWidget{
   const ListViewName({super.key});
 
@@ -14,12 +16,16 @@ class _ListViewNameState extends State<ListViewName> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _classController = TextEditingController();
   void addItem() {
+    
     setState(() {
-      items.add(Student(name: _nameController.text, classroom: _classController.text));
+      String add = locator<NetwordSevice>().add();
+      Student.items.add(Student(name: _nameController.text, classroom: _classController.text));
+      print(add);
     });
   }
   @override
   Widget build(BuildContext context){
+    var data = MyInheritWidget.of(context)?.data;
     return  Scaffold(
       appBar: AppBar(
         title: const Text("Todo ListView"),
@@ -32,17 +38,19 @@ class _ListViewNameState extends State<ListViewName> {
               padding: const EdgeInsets.all(16),
               itemBuilder: (context, index){
                       return ListTile(
-                        title: Text(items[index].name),
-                        subtitle: Text(items[index].classroom),
+                        title: Text(data[index].name),
+                        subtitle: Text(data[index].classroom),
                         trailing: IconButton(
                           onPressed: ()=> setState(() {
-                                        items.remove(items[index]);
-                                      }), 
+                            String delete = locator<NetwordSevice>().delete();
+                            Student.items.remove(data[index]);
+                            print(delete);
+                            }), 
                           icon:const Icon(Icons.delete),
                           ),
                       );
                     },
-                    itemCount: items.length,
+                    itemCount: data!.length,
 
               // itemBuilder: (context, index) => CachedNetworkImage(
               //   key: UniqueKey(),

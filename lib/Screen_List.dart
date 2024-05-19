@@ -9,11 +9,11 @@ class ScreenList extends StatefulWidget{
 }
 
 class _ScreenListState extends State<ScreenList> {
-   final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
   final TextEditingController _classController = TextEditingController();
   void addItem() {
     setState(() {
-      items.add(Student(name: _nameController.text, classroom: _classController.text));
+      Student.items.add(Student(name: _nameController.text, classroom: _classController.text));
     });
   }
   
@@ -31,17 +31,17 @@ class _ScreenListState extends State<ScreenList> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children:
-                 items.map((item) => GestureDetector(
+                 Student.items.map((data) => GestureDetector(
                   child: Padding(
                     padding: const EdgeInsets.all(16),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(item.name),
-                        Text(item.classroom),
+                        Text(data.name),
+                        Text(data.classroom),
                         IconButton(
                           onPressed: ()=> setState(() {
-                            items.remove(item);
+                            Student.items.remove(data);
                           }), 
                           icon: const Icon(Icons.delete)
                           )
@@ -66,7 +66,7 @@ class _ScreenListState extends State<ScreenList> {
                       fillColor: Colors.white,
                       filled: true,
                       contentPadding:EdgeInsets.all(10),
-                      labelText: "Name",
+                      labelText: "",
                       prefixIcon:SizedBox(
                         width: 50,child: Icon(Icons.person),
                       ),
