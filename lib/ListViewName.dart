@@ -19,7 +19,7 @@ class _ListViewNameState extends State<ListViewName> {
     
     setState(() {
       String add = locator<NetwordSevice>().add();
-      Student.items.add(Student(name: _nameController.text, classroom: _classController.text));
+      // Student.items.add(Student(name: _nameController.text, classroom: _classController.text));
       print(add);
     });
   }

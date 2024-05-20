@@ -19,7 +19,7 @@ class _ListViewSeparatedState extends State<ListViewSeparated> {
   final TextEditingController _classController = TextEditingController();
   void addItem() {
     setState(() {
-      Student.items.add(Student(name: _nameController.text, classroom: _classController.text));
+      // Student.items.add(Student(name: _nameController.text, classroom: _classController.text));
     });
   }
   @override

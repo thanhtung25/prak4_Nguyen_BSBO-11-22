@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myapp/DataList.dart';
 import 'package:myapp/ListViewName.dart';
 import 'package:myapp/ListView_Separated.dart';
 import 'package:myapp/Screen_List.dart';
+import 'package:myapp/cubit/student_cubit.dart';
 import 'package:myapp/homepage.dart';
 import 'package:myapp/prak9/MyInheritWidget_data.dart';
 import 'package:myapp/prak9/locator.dart';
@@ -14,12 +15,14 @@ void main() {
   setUp();
   runApp(const MyApp());
 }
+
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();
 }
+
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
@@ -33,39 +36,42 @@ class _MyAppState extends State<MyApp> {
     //     '/lastpage':(context) => const LastPage()
     //   },
     // );
-    return MyInheritWidget(
-      data: Student.items,
-      child: MaterialApp.router(
-        debugShowCheckedModeBanner: false,
-        routerConfig: _router,
-      ) 
-      );
+    return BlocProvider<StudentCubit>(
+      create: (context) => StudentCubit(),
+      child: MyInheritWidget(
+          data: Student.items,
+          child: MaterialApp.router(
+            debugShowCheckedModeBanner: false,
+            routerConfig: _router,
+          )),
+    );
   }
 
-  final GoRouter _router = GoRouter(
-     routes: <GoRoute>[
-      GoRoute(
-        routes:  <GoRoute>[
-          GoRoute(path: 'RoutedNavigation',
+  final GoRouter _router = GoRouter(routes: <GoRoute>[
+    GoRoute(
+      routes: <GoRoute>[
+        GoRoute(
+            path: 'RoutedNavigation',
             builder: (context, state) => const RoutedNavigation(),
             routes: <GoRoute>[
-                  GoRoute(path: 'listview',
+              GoRoute(
+                path: 'listview',
                 builder: (context, state) => const ListViewName(),
               ),
-              GoRoute(path: 'listviewseparated',
+              GoRoute(
+                path: 'listviewseparated',
                 builder: (context, state) => const ListViewSeparated(),
               ),
-              GoRoute(path: 'list',
+              GoRoute(
+                path: 'list',
                 builder: (lastpage, state) => const ScreenList(),
               ),
-            ]
-          ),
-        ],path: '/',
-        builder: (context, state) =>  const HomePage(),
-      )
-     ]
-    );
-
+            ]),
+      ],
+      path: '/',
+      builder: (context, state) => const HomePage(),
+    )
+  ]);
 }
 
 
